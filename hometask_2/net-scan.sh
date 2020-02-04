@@ -1,7 +1,8 @@
 #!/bin/bash
 
-for i in {0..255}
+for ip in $@
 do
-    timeout 0.5s nc -vnz  192.168.0.$i 80 2>&1 | grep succeeded
-    timeout 0.5s nc -vnz  192.168.0.$i 443 2>&1 | grep succeeded
+    #echo $ip $1 $@
+    timeout 0.5s nc -vnz $ip 80 2>&1 | grep succeeded
+    timeout 0.5s nc -vnz $ip 443 2>&1 | grep succeeded
 done
