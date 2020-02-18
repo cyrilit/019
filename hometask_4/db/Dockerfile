@@ -1,10 +1,17 @@
-FROM mysql:latest
+FROM --platform=linux/amd64 ubuntu:latest
 
-WORKDIR /usr/src/app
-#COPY package.json .
-#RUN npm install
+ENV MYSQL_ROOT_PASSWORD rootwordpress
+ENV MYSQL_DATABASE wordpress
+ENV MYSQL_USER wp
+ENV MYSQL_PASSWORD wordpress
+ENV DEBIAN_FRONTEND noninteractive
 
-EXPOSE 8080
-#CMD [ "npm", "start" ]
+#Update Ubuntu
+RUN apt-get update && apt-get install -y mysql-server
 
-#COPY . .
+RUN usermod -d /var/lib/mysql/ mysql
+RUN service mysql start 
+
+EXPOSE 3306
+
+CMD ["mysqld"]
